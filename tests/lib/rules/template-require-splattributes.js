@@ -39,7 +39,9 @@ ruleTester.run('template-require-splattributes', rule, {
     {
       code: '<template><div></div><div></div></template>',
       output: null,
-      errors: [{ message: 'The root element in this template should use `...attributes`' }],
+      errors: [
+        { message: 'At least one element in this template should use `...attributes`' },
+      ],
     },
     {
       code: `<template><div/>
@@ -47,6 +49,22 @@ ruleTester.run('template-require-splattributes', rule, {
 </template>`,
       output: null,
       errors: [{ message: 'The root element in this template should use `...attributes`' }],
+    },
+    {
+      // Template with no elements (only mustache statement)
+      code: '<template>{{yield}}</template>',
+      output: null,
+      errors: [
+        { message: 'At least one element in this template should use `...attributes`' },
+      ],
+    },
+    {
+      // Template with text + one element without splattributes
+      code: '<template>Hello <div></div></template>',
+      output: null,
+      errors: [
+        { message: 'At least one element in this template should use `...attributes`' },
+      ],
     },
   ],
 });
@@ -90,6 +108,22 @@ hbsRuleTester.run('template-require-splattributes', rule, {
 `,
       output: null,
       errors: [{ message: 'The root element in this template should use `...attributes`' }],
+    },
+    {
+      // Template with no elements (only mustache statement)
+      code: '{{yield}}',
+      output: null,
+      errors: [
+        { message: 'At least one element in this template should use `...attributes`' },
+      ],
+    },
+    {
+      // Template with text + one element without splattributes
+      code: 'Hello <div></div>',
+      output: null,
+      errors: [
+        { message: 'At least one element in this template should use `...attributes`' },
+      ],
     },
   ],
 });
