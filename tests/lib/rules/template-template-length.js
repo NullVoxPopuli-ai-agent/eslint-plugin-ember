@@ -6,54 +6,62 @@ const ruleTester = new RuleTester({
   parserOptions: { ecmaVersion: 2022, sourceType: 'module' },
 });
 
+// GJS: sourceCode.getText(node) returns the full <template>...</template> string.
+// '<template>hi</template>' is 23 chars.
+// '<template>\n  one\n  two\n</template>' is 34 chars.
+
 ruleTester.run('template-template-length', rule, {
   valid: [
+    // 34 chars, max 50 is fine
     {
       code: `<template>
   one
   two
 </template>`,
-      options: [{ max: 5 }],
+      options: [{ max: 50 }],
     },
+    // 42 chars, min 10 is fine
     {
       code: `<template>
   one
   two
   three
 </template>`,
-      options: [{ min: 3 }],
+      options: [{ min: 10 }],
     },
+    // disabled via false
     {
       code: `<template>
   one
 </template>`,
       options: [false],
     },
-
+    // no options = no checks
     `<template>testing this
 and
-this
-and	his</template>`,
+this</template>`,
   ],
   invalid: [
     {
+      // '<template>\n  one\n  two\n</template>' = 34 chars
       code: `<template>
   one
   two
 </template>`,
       output: null,
-      options: [{ min: 10 }],
-      errors: [{ message: 'Template length of 4 is smaller than 10' }],
+      options: [{ min: 50 }],
+      errors: [{ message: 'Template length of 34 is smaller than 50' }],
     },
     {
+      // '<template>\n  one\n  two\n  three\n</template>' = 42 chars
       code: `<template>
   one
   two
   three
 </template>`,
       output: null,
-      options: [{ max: 3 }],
-      errors: [{ message: 'Template length of 5 exceeds 3' }],
+      options: [{ max: 30 }],
+      errors: [{ message: 'Template length of 42 exceeds 30' }],
     },
   ],
 });
@@ -68,49 +76,39 @@ const hbsRuleTester = new RuleTester({
 
 hbsRuleTester.run('template-template-length', rule, {
   valid: [
-    `testing this
-and
-this
-and	his`,
-    `testing
-this
-`,
-    `testing
-this
-and	his
-`,
-    `testing
-this
-andthis
-`,
-    // Config: max option
+    // no options = no checks (defaults not applied without `true`)
+    'testing this\nand\nthis',
+    'short',
+    // 13 chars, max 200 is fine
     {
       code: 'testing\nthis\n',
-      options: [{ max: 10 }],
+      options: [{ max: 200 }],
     },
-    // Config: min option
+    // 13 chars, min 1 is fine
     {
-      code: 'testing\nthis\nand\this\n',
+      code: 'testing\nthis\n',
       options: [{ min: 1 }],
     },
-    // Config: min + max options
+    // 20 chars, min 5 and max 50 is fine
     {
       code: 'testing\nthis\nandthis\n',
-      options: [{ min: 1, max: 5 }],
+      options: [{ min: 5, max: 50 }],
     },
   ],
   invalid: [
     {
-      code: 'testing\ntoo-short template\n',
+      // 'short' = 5 chars
+      code: 'short',
       output: null,
       options: [{ min: 10 }],
-      errors: [{ message: 'Template length of 3 is smaller than 10' }],
+      errors: [{ message: 'Template length of 5 is smaller than 10' }],
     },
     {
-      code: 'test\nthis\nand\nthis\n',
+      // 'testing\nthis\nand\nthis\n' = 22 chars
+      code: 'testing\nthis\nand\nthis\n',
       output: null,
-      options: [{ max: 3 }],
-      errors: [{ message: 'Template length of 5 exceeds 3' }],
+      options: [{ max: 10 }],
+      errors: [{ message: 'Template length of 22 exceeds 10' }],
     },
   ],
 });

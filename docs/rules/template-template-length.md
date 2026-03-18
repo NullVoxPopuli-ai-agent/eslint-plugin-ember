@@ -13,8 +13,8 @@ This rule accepts either:
 
 - `true` / `false`
 - an object with:
-  - `max` (integer): maximum allowed template length in lines
-  - `min` (integer): minimum allowed template length in lines
+  - `max` (integer): maximum allowed template length in characters
+  - `min` (integer): minimum allowed template length in characters
 
 Using `true` defaults to:
 
