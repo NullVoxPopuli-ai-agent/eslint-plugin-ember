@@ -366,10 +366,11 @@ rules in templates can be disabled with eslint directives with mustache or html 
 
 ### Possible Errors
 
-| Name                                                                                         | Description                                               | 💼 | 🔧 | 💡 |
-| :------------------------------------------------------------------------------------------- | :-------------------------------------------------------- | :- | :- | :- |
-| [template-no-extra-mut-helper-argument](docs/rules/template-no-extra-mut-helper-argument.md) | disallow passing more than one argument to the mut helper |    |    |    |
-| [template-no-jsx-attributes](docs/rules/template-no-jsx-attributes.md)                       | disallow JSX-style camelCase attributes                   |    | 🔧 |    |
+| Name                                                                                                                       | Description                                               | 💼 | 🔧 | 💡 |
+| :------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------- | :- | :- | :- |
+| [template-no-extra-mut-helper-argument](docs/rules/template-no-extra-mut-helper-argument.md)                               | disallow passing more than one argument to the mut helper |    |    |    |
+| [template-no-jsx-attributes](docs/rules/template-no-jsx-attributes.md)                                                     | disallow JSX-style camelCase attributes                   |    | 🔧 |    |
+| [template-no-unknown-arguments-for-builtin-components](docs/rules/template-no-unknown-arguments-for-builtin-components.md) | disallow unknown arguments for built-in components        |    |    |    |
 
 ### Routes
 
