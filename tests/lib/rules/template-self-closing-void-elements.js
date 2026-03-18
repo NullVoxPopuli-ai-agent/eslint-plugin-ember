@@ -45,6 +45,10 @@ ruleTester.run('template-self-closing-void-elements', rule, {
     '<template><source></template>',
     '<template><track></template>',
     '<template><wbr></template>',
+
+    // `false` config disables the rule entirely
+    { code: '<template><br/></template>', options: [false] },
+    { code: '<template><br></template>', options: [false] },
   ],
 
   invalid: [
@@ -52,7 +56,9 @@ ruleTester.run('template-self-closing-void-elements', rule, {
       code: `<template>
         <img src="foo.jpg" />
       </template>`,
-      output: null,
+      output: `<template>
+        <img src="foo.jpg">
+      </template>`,
       errors: [
         {
           message: 'Self-closing a void element is redundant.',
@@ -64,7 +70,9 @@ ruleTester.run('template-self-closing-void-elements', rule, {
       code: `<template>
         <br />
       </template>`,
-      output: null,
+      output: `<template>
+        <br>
+      </template>`,
       errors: [
         {
           message: 'Self-closing a void element is redundant.',
@@ -76,7 +84,9 @@ ruleTester.run('template-self-closing-void-elements', rule, {
       code: `<template>
         <input type="text" />
       </template>`,
-      output: null,
+      output: `<template>
+        <input type="text">
+      </template>`,
       errors: [
         {
           message: 'Self-closing a void element is redundant.',
@@ -87,82 +97,82 @@ ruleTester.run('template-self-closing-void-elements', rule, {
 
     {
       code: '<template><area/></template>',
-      output: null,
+      output: '<template><area></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><base/></template>',
-      output: null,
+      output: '<template><base></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><br/></template>',
-      output: null,
+      output: '<template><br></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><col/></template>',
-      output: null,
+      output: '<template><col></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><command/></template>',
-      output: null,
+      output: '<template><command></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><embed/></template>',
-      output: null,
+      output: '<template><embed></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><hr/></template>',
-      output: null,
+      output: '<template><hr></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><img/></template>',
-      output: null,
+      output: '<template><img></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><input/></template>',
-      output: null,
+      output: '<template><input></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><keygen/></template>',
-      output: null,
+      output: '<template><keygen></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><link/></template>',
-      output: null,
+      output: '<template><link></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><meta/></template>',
-      output: null,
+      output: '<template><meta></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><param/></template>',
-      output: null,
+      output: '<template><param></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><source/></template>',
-      output: null,
+      output: '<template><source></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><track/></template>',
-      output: null,
+      output: '<template><track></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
     {
       code: '<template><wbr/></template>',
-      output: null,
+      output: '<template><wbr></template>',
       errors: [{ message: 'Self-closing a void element is redundant.' }],
     },
   ],
@@ -217,130 +227,137 @@ hbsRuleTester.run('template-self-closing-void-elements', rule, {
       code: 'foo<wbr data-custom="50" {{my-modifier true "baz"}} {{!comment}} as |paramA paramB| />bar',
       options: ['require'],
     },
+    // `false` config disables the rule entirely
+    { code: '<br/>', options: [false] },
+    { code: '<br>', options: [false] },
+    { code: '<img/>', options: [false] },
+    { code: '<img>', options: [false] },
   ],
   invalid: [
-    { code: '<area/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<base/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<br/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<col/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<command/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<embed/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<hr/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<img/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<input/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<keygen/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<link/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<meta/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<param/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<source/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<track/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
-    { code: '<wbr/>', output: null, errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<area/>', output: '<area>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<base/>', output: '<base>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<br/>', output: '<br>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<col/>', output: '<col>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<command/>', output: '<command>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<embed/>', output: '<embed>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<hr/>', output: '<hr>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<img/>', output: '<img>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<input/>', output: '<input>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<keygen/>', output: '<keygen>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<link/>', output: '<link>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<meta/>', output: '<meta>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<param/>', output: '<param>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<source/>', output: '<source>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<track/>', output: '<track>', errors: [{ messageId: 'redundantSelfClosing' }] },
+    { code: '<wbr/>', output: '<wbr>', errors: [{ messageId: 'redundantSelfClosing' }] },
     // 'require' config — non-self-closing void elements are invalid.
     {
       code: '<area>',
-      output: null,
+      output: '<area />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<base>',
-      output: null,
+      output: '<base />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<br>',
-      output: null,
+      output: '<br />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<col>',
-      output: null,
+      output: '<col />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<command>',
-      output: null,
+      output: '<command />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<embed>',
-      output: null,
+      output: '<embed />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<hr>',
-      output: null,
+      output: '<hr />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<img>',
-      output: null,
+      output: '<img />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<input>',
-      output: null,
+      output: '<input />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<keygen>',
-      output: null,
+      output: '<keygen />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<link>',
-      output: null,
+      output: '<link />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<meta>',
-      output: null,
+      output: '<meta />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<param>',
-      output: null,
+      output: '<param />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<source>',
-      output: null,
+      output: '<source />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<track>',
-      output: null,
+      output: '<track />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     {
       code: '<wbr>',
-      output: null,
+      output: '<wbr />',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
     // Complex void element with attributes, modifiers, comments, and block params
     {
       code: 'foo<wbr data-custom="50" {{my-modifier true "baz"}} {{!comment}} as |paramA paramB| />bar',
-      output: null,
+      output:
+        'foo<wbr data-custom="50" {{my-modifier true "baz"}} {{!comment}} as |paramA paramB|>bar',
       errors: [{ messageId: 'redundantSelfClosing' }],
     },
     {
       code: 'foo<wbr data-custom="50" {{my-modifier true "baz"}} {{!comment}} as |paramA paramB| >bar',
-      output: null,
+      output:
+        'foo<wbr data-custom="50" {{my-modifier true "baz"}} {{!comment}} as |paramA paramB|  />bar',
       options: ['require'],
       errors: [{ messageId: 'requireSelfClosing' }],
     },
