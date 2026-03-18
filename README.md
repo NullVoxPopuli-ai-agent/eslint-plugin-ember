@@ -244,6 +244,7 @@ rules in templates can be disabled with eslint directives with mustache or html 
 | [template-no-obsolete-elements](docs/rules/template-no-obsolete-elements.md)                                 | disallow obsolete HTML elements                                              |    |    |    |
 | [template-no-outlet-outside-routes](docs/rules/template-no-outlet-outside-routes.md)                         | disallow {{outlet}} outside of route templates                               |    |    |    |
 | [template-no-page-title-component](docs/rules/template-no-page-title-component.md)                           | disallow usage of ember-page-title component                                 |    |    |    |
+| [template-require-splattributes](docs/rules/template-require-splattributes.md)                               | require splattributes usage in component templates                           |    |    |    |
 
 ### Components
 
