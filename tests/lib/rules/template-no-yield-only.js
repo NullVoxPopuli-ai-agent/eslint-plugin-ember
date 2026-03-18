@@ -111,6 +111,17 @@ ruleTester.run('template-no-yield-only', rule, {
         },
       ],
     },
+    {
+      // HTML comments don't count as other content
+      code: '<template><!-- comment -->{{yield}}</template>',
+      output: null,
+      errors: [
+        {
+          message:
+            'Component should not only yield. Add wrapper element or additional functionality.',
+        },
+      ],
+    },
   ],
 });
 
@@ -148,6 +159,12 @@ hbsRuleTester.run('template-no-yield-only', rule, {
     },
     {
       code: '\n{{! some comment }}  {{yield}}\n     ',
+      output: null,
+      errors: [{ messageId: 'noYieldOnly' }],
+    },
+    {
+      // HTML comments don't count as other content
+      code: '<!-- comment -->{{yield}}',
       output: null,
       errors: [{ messageId: 'noYieldOnly' }],
     },
