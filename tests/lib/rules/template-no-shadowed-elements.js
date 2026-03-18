@@ -45,6 +45,38 @@ ruleTester.run('template-no-shadowed-elements', rule, {
     '<template><FooBar as |Baz|><Baz /></FooBar></template>',
     '<template>{{#with foo=(component "blah-zorz") as |Div|}}<Div></Div>{{/with}}</template>',
     '<template><Foo as |bar|><bar.baz /></Foo></template>',
+
+    // gjs: block param matches HTML element name but resolves to a JS import — not shadowing
+    {
+      code: `
+        import form from './form';
+        <template>
+          <SomeComponent as |form|>
+            <form></form>
+          </SomeComponent>
+        </template>
+      `,
+    },
+    {
+      code: `
+        import select from './select';
+        <template>
+          <SomeComponent as |select|>
+            <select></select>
+          </SomeComponent>
+        </template>
+      `,
+    },
+    {
+      code: `
+        import div from './div-component';
+        <template>
+          <SomeComponent as |div|>
+            <div></div>
+          </SomeComponent>
+        </template>
+      `,
+    },
   ],
 
   invalid: [
