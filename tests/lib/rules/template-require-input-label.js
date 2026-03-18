@@ -50,6 +50,24 @@ ruleTester.run('template-require-input-label', rule, {
     // Select with aria-labelledby and aria-label
     '<template><select aria-labelledby="someIdValue"></select></template>',
     '<template><select aria-label={{labelText}}></select></template>',
+
+    // In strict mode (gjs/gts), capitalized Input/Textarea are Ember builtins and should be skipped
+    {
+      code: '<template><Input /></template>',
+      filename: 'my-component.gjs',
+    },
+    {
+      code: '<template><Textarea /></template>',
+      filename: 'my-component.gjs',
+    },
+    {
+      code: '<template><Input type="text" /></template>',
+      filename: 'my-component.gts',
+    },
+    {
+      code: '<template><Textarea></Textarea></template>',
+      filename: 'my-component.gts',
+    },
   ],
   invalid: [
     {
