@@ -31,6 +31,13 @@ ruleTester.run('template-no-unused-block-params', rule, {
     '<template>{{#with (component "foo-bar") as |FooBar|}}<FooBar />{{/with}}</template>',
     '<template><BurgerMenu as |menu|><header>Something</header><menu.item>Text</menu.item></BurgerMenu></template>',
     '<template>{{#burger-menu as |menu|}}<header>Something</header>{{#menu.item}}Text{{/menu.item}}{{/burger-menu}}</template>',
+
+    // gjs: block param used in deeply nested context (scope analysis)
+    '<template>{{#each items as |item|}}{{#if true}}<div>{{item.name}}</div>{{/if}}{{/each}}</template>',
+    // gjs: shadowed param in nested block (inner reference resolves to inner scope)
+    '<template>{{#each cats as |cat|}}{{#meow-meow cat as |cat|}}{{cat}}{{/meow-meow}}{{/each}}</template>',
+    // gjs: multiple params, all used
+    '<template>{{#each items as |item index|}}{{item}} - {{index}}{{/each}}</template>',
   ],
   invalid: [
     {
@@ -63,6 +70,12 @@ ruleTester.run('template-no-unused-block-params', rule, {
       code: '<template>{{#each cats as |cat index|}}{{/each}}</template>',
       output: null,
       errors: [{ messageId: 'unusedBlockParam' }],
+    },
+    // gjs: param unused in deeply nested context
+    {
+      code: '<template>{{#each items as |item index|}}{{#if true}}<div>{{item.name}}</div>{{/if}}{{/each}}</template>',
+      output: null,
+      errors: [{ messageId: 'unusedBlockParam', data: { param: 'index' } }],
     },
   ],
 });
